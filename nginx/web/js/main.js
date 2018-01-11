@@ -1,3 +1,8 @@
+
+var audio = document.getElementById('music');
+
+
+
 var mobile = angular.module("mobile", ["ui.router"]);
 
 
@@ -48,10 +53,10 @@ mobile.config(function ($stateProvider, $urlRouterProvider) {
 });
 
 
-mobile.controller("godController",function($scope){
-    $scope.playMusic=false;
-    $scope.$on('playMusic',function(){
-        $scope.playMusic=true;
+mobile.controller("godController", function ($scope) {
+    $scope.playMusic = false;
+    $scope.$on('playMusic', function () {
+        $scope.playMusic = true;
     })
 })
 
@@ -66,59 +71,88 @@ mobile.controller("loginController", function ($scope, $http, $state) {
                 $state.go("start")
             },
             'onCancel': function () {
-                
+
             }
         });
     }
 })
 
-mobile.controller("startController",function($scope,$http,$state){
-    $scope.init=function(){
-        $scope.$emit('playMusic');
+mobile.controller("startController", function ($scope, $http, $state) {
+    $scope.init = function () {
+        // $scope.$emit('playMusic');
+        audio.play();
     }
-    $scope.startGame=function(){
+    $scope.startGame = function () {
         $state.go("game");
     }
 })
 
 
-mobile.controller("gameController",function($scope,$http,$state){
-    $scope.total = 4;
-    $scope.currentNum=1;
+mobile.controller("gameController", function ($scope, $http, $state) {
 
-    $scope.init=function(){
-        $http({
-            method:"GET",
-            url:"http://45.63.124.245:8080/question"
-        }).then(function(result){
-            $scope.subject = result.data[0];
+
+    function updateProgress() {
+        if ($scope.currentNum == $scope.total) {
+            $state.go("success");
+        }
+        $scope.progress = {
+            width: ($scope.currentNum / $scope.total) * 100 + '%'
+        }
+    }
+
+    function getAQuestion() {
+        return $http({
+            method: "GET",
+            url: "http://king.joeybox.top:8080/api/question/random"
+        }).then(function (result) {
+            $scope.subject = result.data.data;
             updateProgress()
-            console.log($scope.subject)
+        }, function (error) {
+            $scope.badConnect = true;
         })
     }
 
-    function updateProgress(){
-        if($scope.currentNum==$scope.total){
-            $state.go("success");
-        }
-        $scope.progress={
-            width:($scope.currentNum/$scope.total)*100+'%'
-        }
+    $scope.init = function () {
+        $scope.badConnect = false;
+        $scope.total = 4;
+        $scope.currentNum = 0;
+        getAQuestion();
     }
 
-    $scope.answer=function(answer){
-        console.log(answer)
-        $scope.currentNum++;
-        updateProgress();
+
+
+    $scope.answer = function (answer) {
+
+        $http({
+            method: "POST",
+            url: "http://king.joeybox.top:8080/api/user/1/answer",
+            data: {
+                questionId: $scope.subject.id,
+                answer: answer
+            }
+        }).then(function (result) {
+            console.log(result.data.data)
+            var isCorrect = result.data.data;
+            if (!isCorrect) {
+                $state.go("failed");
+            } else {
+                $scope.currentNum++;
+                updateProgress();
+                getAQuestion();
+            }
+
+        }, function (error) {
+            $scope.badConnect = true;
+        })
     }
-    
+
 
 
 
 })
 
-mobile.controller("successController",function($scope,$http,$state){
-    $scope.giveMeMoney=function(){
+mobile.controller("successController", function ($scope, $http, $state) {
+    $scope.giveMeMoney = function () {
         PostbirdAlertBox.confirm({
             'title': '确认',
             'content': '提现到微信，确定吗？',
@@ -128,21 +162,21 @@ mobile.controller("successController",function($scope,$http,$state){
                 $state.go("result")
             },
             'onCancel': function () {
-                
+
             }
         });
     }
 })
 
-mobile.controller("resultController",function($scope,$http,$state){
-    $scope.startGame=function(){
+mobile.controller("resultController", function ($scope, $http, $state) {
+    $scope.startGame = function () {
         $state.go("game");
     }
 })
 
 
-mobile.controller("failedController",function($scope,$http,$state){
-    $scope.startGame=function(){
+mobile.controller("failedController", function ($scope, $http, $state) {
+    $scope.startGame = function () {
         $state.go("game");
     }
 })

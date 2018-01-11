@@ -3,6 +3,7 @@
     bottom: 5rem;
     width: 80%;
     left:10%;
+    z-index: 3;
 }
 
 
@@ -45,4 +46,45 @@
 }
 .banner .normal.first{
     margin-top: 6rem;
+}
+
+
+
+.login-bg{
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+    background-image: url("../images/bg_1.jpg");
+}
+
+.start-bg{
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+    background-image: url("../images/cunt_money.gif");
+}
+
+.mask{
+    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+    background: rgba(0,0,0,.3);
+    z-index: 2;
+}
+.app-name{
+    position: fixed;
+    top:6rem;
+    left:0;
+    right: 0;
+    font-size: 7rem;
+    color:#fff;
+    width: 100%;
+    text-align: center;
+    z-index: 3;
 }

@@ -2,18 +2,28 @@
     <div class="progress-bar" role="progressbar" aria-valuenow="{{currentNum}}" aria-valuemin="0" aria-valuemax="4" ng-style="progress">
         {{currentNum}}/{{total}}
     </div>
-    <div class="container ">
+
+    <div class="container" ng-if="badConnect">
+        <div class="banner">
+            <img src="images/badConnect.gif" alt="" srcset="" class="img-thumbnail">
+            <h4>网络崩了，心态崩了</h4>
+            <a type="button" class="btn btn-primary btn-lg btn-block" ui-sref="start">退出重连</a>
+        </div>
+    </div>
+    <div class="container" ng-if="!badConnect">
         <div class="panel panel-default top-gap-10">
             <div class="panel-body">
-                    <h2 class="title">{{subject.title}}</h2>
+                <h2 class="title">{{subject.title}}</h2>
             </div>
         </div>
-        
+
+
+
         <div class="anwserList">
             <button ng-click="answer(subject.option1)" type="button" class="btn btn-default btn-info btn-block">{{subject.option1}}</button>
-            <button type="button" class="btn btn-default btn-info btn-block">{{subject.option2}}</button>
-            <button type="button" class="btn btn-default btn-info btn-block">{{subject.option3}}</button>
-            <button type="button" class="btn btn-default btn-info btn-block">{{subject.option4}}</button>
+            <button ng-click="answer(subject.option2)" type="button" class="btn btn-default btn-info btn-block">{{subject.option2}}</button>
+            <button ng-click="answer(subject.option3)" type="button" class="btn btn-default btn-info btn-block">{{subject.option3}}</button>
+            <button ng-click="answer(subject.option4)" type="button" class="btn btn-default btn-info btn-block">{{subject.option4}}</button>
         </div>
 
     </div>

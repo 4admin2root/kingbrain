@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="css/postbirdAlertBox.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body >
+<body>
     <div ng-app="mobile" ng-controller="godController">
         <ui-view></ui-view>
-        <audio src="music/Mappy.mp3" loop="loop" autoplay="autoplay" ng-if="playMusic"></audio>
+        <audio id="music" src="music/Mappy.mp3" loop="loop" autoplay="autoplay" ng-if="playMusic"></audio>
     </div>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
