@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">KingBrain</string>
+    <string name="miss_net">当前无网络，无法答题</string>
+</resources>
