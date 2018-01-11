@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>人生赢家</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/postbirdAlertBox.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body >
+    <div ng-app="mobile" ng-controller="godController">
+        <ui-view></ui-view>
+        <audio src="music/Mappy.mp3" loop="loop" autoplay="autoplay" ng-if="playMusic"></audio>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/ui.router.js"></script>
+    <script src="js/postbirdAlertBox.min.js"></script>
+    <script src="bower_components/mockjs/dist/mock.js"></script>
+    <script src="js/mockConfig.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

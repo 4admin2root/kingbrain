@@ -1,0 +1,22 @@
+<div ng-controller="gameController" class="game" ng-init="init()">
+    <div class="progress-bar" role="progressbar" aria-valuenow="{{currentNum}}" aria-valuemin="0" aria-valuemax="4" ng-style="progress">
+        {{currentNum}}/{{total}}
+    </div>
+    <div class="container ">
+        <div class="panel panel-default top-gap-10">
+            <div class="panel-body">
+                    <h2 class="title">{{subject.title}}</h2>
+            </div>
+        </div>
+        
+        <div class="anwserList">
+            <button ng-click="answer(subject.option1)" type="button" class="btn btn-default btn-info btn-block">{{subject.option1}}</button>
+            <button type="button" class="btn btn-default btn-info btn-block">{{subject.option2}}</button>
+            <button type="button" class="btn btn-default btn-info btn-block">{{subject.option3}}</button>
+            <button type="button" class="btn btn-default btn-info btn-block">{{subject.option4}}</button>
+        </div>
+
+    </div>
+
+
+</div>

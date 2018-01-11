@@ -1,0 +1,48 @@
+.btn-wx-login{
+    position: fixed;
+    bottom: 5rem;
+    width: 80%;
+    left:10%;
+}
+
+
+.top-gap-3{
+    margin-top: 3rem;
+}
+.top-gap-6{
+    margin-top: 6rem;
+}
+
+.top-gap-10{
+    margin-top: 10rem;
+}
+.game .currentNum{
+    height: 7rem;
+    line-height: 7rem;
+}
+
+.game .anwserList{
+    margin: 3rem 0;
+}
+
+.game .title{
+    line-height: 1.45;
+}
+
+.game .anwserList button{
+    margin: 1rem 0;
+}
+
+
+
+
+.banner{
+    text-align: center;
+    padding: 6rem 0;
+}
+.banner .normal{
+    color:#555;
+}
+.banner .normal.first{
+    margin-top: 6rem;
+}
