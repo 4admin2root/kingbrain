@@ -1,0 +1,607 @@
+---
+swagger: "2.0"
+info:
+  description: "This is an example of KINGBRAIN using OAuth2 Application Flow in a\
+    \ specification to describe security to your API."
+  version: "0.0.1"
+  title: "kingbrain"
+host: "app.kingbrain.cn"
+basePath: "/kingbrain/v1"
+tags:
+- name: "kingbrain-users"
+  description: "Everything about users"
+- name: "kingbrain-questions"
+  description: "Everything about questions"
+- name: "kingbrain-admins"
+  description: "Everything about admins"
+schemes:
+- "http"
+security:
+- application:
+  - "snsapi_userinfo"
+paths:
+  /user:
+    post:
+      tags:
+      - "kingbrain-users"
+      summary: "add a new user"
+      operationId: "addUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Create user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+      security: []
+      x-swagger-router-controller: "KingbrainUsers"
+  /user/{openid}:
+    get:
+      tags:
+      - "kingbrain-users"
+      summary: "get userinfo from backend with openid"
+      description: "get userinfo from backend with openid"
+      operationId: "getUserByOpenid"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "openid"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid openid"
+        404:
+          description: "User not found"
+      security: []
+      x-swagger-router-controller: "KingbrainUsers"
+    put:
+      tags:
+      - "kingbrain-users"
+      summary: "update userinfo"
+      description: "update userinfo"
+      operationId: "updateUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "openid"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        400:
+          description: "Invalid openid"
+        404:
+          description: "User not found"
+      security: []
+      x-swagger-router-controller: "KingbrainUsers"
+    delete:
+      tags:
+      - "kingbrain-users"
+      summary: "delete user"
+      description: "delete user triggered by admin"
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "openid"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid openid"
+        404:
+          description: "User not found"
+      security: []
+      x-swagger-router-controller: "KingbrainUsers"
+  /user/phone/{phone}:
+    get:
+      tags:
+      - "kingbrain-users"
+      summary: "get userinfo from backend with phone"
+      description: "get userinfo from backend with phone"
+      operationId: "getUserByPhone"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "phone"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid openid"
+        404:
+          description: "User not found"
+      security: []
+      x-swagger-router-controller: "KingbrainUsers"
+    put:
+      tags:
+      - "kingbrain-users"
+      summary: "update userinfo"
+      description: "update userinfo"
+      operationId: "updateUserByPhone"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "phone"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        400:
+          description: "Invalid phone"
+        404:
+          description: "User not found"
+      security: []
+      x-swagger-router-controller: "KingbrainUsers"
+    delete:
+      tags:
+      - "kingbrain-users"
+      summary: "delete user"
+      description: "delete user triggered by admin"
+      operationId: "deleteUserByPhone"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "phone"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid phone"
+        404:
+          description: "User not found"
+      security: []
+      x-swagger-router-controller: "KingbrainUsers"
+  /question:
+    get:
+      tags:
+      - "kingbrain-questions"
+      summary: "get a question"
+      operationId: "getQuestion"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Question"
+      security: []
+      x-swagger-router-controller: "KingbrainQuestions"
+    post:
+      tags:
+      - "kingbrain-questions"
+      summary: "add a question"
+      operationId: "addQuestion"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Create question object"
+        required: true
+        schema:
+          $ref: "#/definitions/Question_Answer"
+      responses:
+        default:
+          description: "successful operation"
+      security: []
+      x-swagger-router-controller: "KingbrainQuestions"
+  /question/random:
+    get:
+      tags:
+      - "kingbrain-questions"
+      summary: "get a question"
+      operationId: "getQuestionRandom"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Question"
+      security: []
+      x-swagger-router-controller: "KingbrainQuestions"
+  /question/{id}:
+    get:
+      tags:
+      - "kingbrain-questions"
+      summary: "get question from backend with id"
+      description: "get question from backend with id"
+      operationId: "getQuestionById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Question"
+        400:
+          description: "Invalid id"
+        404:
+          description: "Question not found"
+      security: []
+      x-swagger-router-controller: "KingbrainQuestions"
+    put:
+      tags:
+      - "kingbrain-questions"
+      summary: "update question"
+      description: "update question"
+      operationId: "updateQuestion"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Question_Answer"
+      responses:
+        400:
+          description: "Invalid id"
+        404:
+          description: "Question not found"
+      security: []
+      x-swagger-router-controller: "KingbrainQuestions"
+    delete:
+      tags:
+      - "kingbrain-questions"
+      summary: "delete question"
+      description: "delete question triggered by admin"
+      operationId: "deleteQuestion"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid id"
+        404:
+          description: "Question not found"
+      security: []
+      x-swagger-router-controller: "KingbrainQuestions"
+  /question/answer/{id}:
+    get:
+      tags:
+      - "kingbrain-questions"
+      summary: "get question answer from backend with id"
+      description: "get question answer from backend with id"
+      operationId: "getQuestionAnswerById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Answer"
+        400:
+          description: "Invalid id"
+      security: []
+      x-swagger-router-controller: "KingbrainQuestions"
+  /question/useranswer:
+    post:
+      tags:
+      - "kingbrain-questions"
+      summary: "create useranswer"
+      description: "post a useranswer"
+      operationId: "createUserAnswer"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Question_Answer"
+      responses:
+        default:
+          description: "successful operation"
+      security: []
+      x-swagger-router-controller: "KingbrainQuestions"
+  /admin/auth:
+    post:
+      tags:
+      - "kingbrain-admins"
+      summary: "admin login"
+      operationId: "loginAdmin"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "admin auth"
+        required: true
+        schema:
+          $ref: "#/definitions/AdminAuth"
+      responses:
+        default:
+          description: "successful operation"
+      security: []
+      x-swagger-router-controller: "KingbrainAdmins"
+  /admin:
+    get:
+      tags:
+      - "kingbrain-admins"
+      summary: "get a adminuser"
+      operationId: "getAdmin"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Admin"
+      security: []
+      x-swagger-router-controller: "KingbrainAdmins"
+    post:
+      tags:
+      - "kingbrain-admins"
+      summary: "add a adminuser"
+      operationId: "addAdmin"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Create adminuser object"
+        required: true
+        schema:
+          $ref: "#/definitions/Admin"
+      responses:
+        default:
+          description: "successful operation"
+      security: []
+      x-swagger-router-controller: "KingbrainAdmins"
+  /admin/{id}:
+    get:
+      tags:
+      - "kingbrain-admins"
+      summary: "get adminuser from backend with id"
+      description: "get adminuser from backend with id"
+      operationId: "getAdminById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Admin"
+        400:
+          description: "Invalid id"
+        404:
+          description: "User not found"
+      security: []
+      x-swagger-router-controller: "KingbrainAdmins"
+    put:
+      tags:
+      - "kingbrain-admins"
+      summary: "update admin"
+      description: "update admin"
+      operationId: "updateAdmin"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Question"
+      responses:
+        400:
+          description: "Invalid id"
+        404:
+          description: "Question not found"
+      security: []
+      x-swagger-router-controller: "KingbrainAdmins"
+    delete:
+      tags:
+      - "kingbrain-admins"
+      summary: "delete admin"
+      description: "delete adminuser triggered by admin"
+      operationId: "deleteAdmin"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid id"
+        404:
+          description: "Question not found"
+      security: []
+      x-swagger-router-controller: "KingbrainAdmins"
+securityDefinitions:
+  application:
+    type: "oauth2"
+    tokenUrl: "http://open.weixin.qq.com/oauth/token"
+    flow: "application"
+    scopes:
+      snsapi_userinfo: "userinfo"
+definitions:
+  User:
+    type: "object"
+    properties:
+      openid:
+        type: "string"
+      name:
+        type: "string"
+      avatar:
+        type: "string"
+      phone:
+        type: "integer"
+        format: "int32"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "User Status"
+      trial_times:
+        type: "integer"
+        format: "int32"
+    example:
+      userStatus: 6
+      phone: 0
+      openid: "openid"
+      trial_times: 1
+      name: "name"
+      avatar: "avatar"
+    xml:
+      name: "User"
+  Answer:
+    type: "object"
+    properties:
+      value:
+        type: "string"
+    example:
+      value: "value"
+  Question:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      subject:
+        type: "string"
+      title:
+        type: "string"
+      option1:
+        type: "string"
+      option2:
+        type: "string"
+      option3:
+        type: "string"
+      option4:
+        type: "string"
+    example:
+      subject: "subject"
+      option3: "option3"
+      option4: "option4"
+      option1: "option1"
+      id: 0
+      option2: "option2"
+      title: "title"
+    xml:
+      name: "Question"
+  Question_Answer:
+    type: "object"
+    properties:
+      question:
+        $ref: "#/definitions/Question"
+      answer:
+        $ref: "#/definitions/Answer"
+    example:
+      question:
+        subject: "subject"
+        option3: "option3"
+        option4: "option4"
+        option1: "option1"
+        id: 0
+        option2: "option2"
+        title: "title"
+      answer:
+        value: "value"
+    xml:
+      name: "Question_Answer"
+  Admin:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      username:
+        type: "string"
+      password:
+        type: "string"
+    example:
+      password: "password"
+      id: 0
+      username: "username"
+    xml:
+      name: "Admin"
+  AdminAuth:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+    example:
+      password: "password"
+      username: "username"
+    xml:
+      name: "AdminAuth"
+  Balance_track:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      user_id:
+        type: "integer"
+        format: "int32"
+      event:
+        type: "integer"
+        format: "int32"
+      amount:
+        type: "number"
+      create_time:
+        type: "string"
+        format: "date-time"
+    xml:
+      name: "User"
