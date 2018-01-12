@@ -15,6 +15,7 @@ pipeline {
             steps {
                 echo 'Testing..'
 		sh 'docker run -d --name web -p 8080:80 4admin2root/kingbrain_web:v1.0'
+		sh 'curl localhost:8080/index.html'
             }
         }
         stage('Push') {
