@@ -16,3 +16,4 @@ curl https://raw.githubusercontent.com/4admin2root/kingbrain/master/init.sh |bas
 
 ## browser
 http://king.joeybox.top:8080/index.html#!/login
+http://king.joeybox.top:8080/api/swagger-ui.html
