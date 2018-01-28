@@ -1,0 +1,36 @@
+kingbrain-redis:
+  container_name: redis
+  hostname: redis
+  image: redis:3.2
+  restart: always
+  expose:
+    - "6379"
+  ports:
+    - "6379:6379"
+
+kingbrain-backend:
+  container_name: brain
+  hostname: brain
+  image: 4admin2root/kingbrain_backend:0.1.1
+  restart: always
+  expose:
+    - "8079"
+  ports:
+    - "8079:8079"
+  links:
+    - kingbrain-redis:redis.joeybox.top
+ 
+kingbrain-web:
+  container_name: web
+  hostname: web
+  image: 4admin2root/kingbrain_web:v1.0
+  restart: always
+  expose:
+    - "80"
+  ports:
+    - "8080:80"
+  links:
+    - kingbrain-backend:brain.joeybox.top
+  extra_hosts:
+    - "king.joeybox.top:127.0.0.1"
+

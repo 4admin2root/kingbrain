@@ -1,12 +1,22 @@
-
 var audio = document.getElementById('music');
+
+
+var DEVING=false;
+
+var PRO_GET_A_RANDOM_QUESTION="http://king.joeybox.top:8080/api/user/1/question";
+var PRO_CHECK_ANSWER_IS_CORRECT="http://king.joeybox.top:8080/api/user/1/answer";
+
+var DEV_GET_A_RANDOM_QUESTION="http://10.205.124.154:8080/user/1/question";
+var DEV_CHECK_ANSWER_IS_CORRECT="http://10.205.124.154:8080/user/1/answer";
+
+
+
 
 
 
 var mobile = angular.module("mobile", ["ui.router"]);
 
-
-mobile.config(function ($stateProvider, $urlRouterProvider) {
+mobile.config(function ($stateProvider, $urlRouterProvider,$httpProvider) {
 
     var loginState = {
         name: 'login',
@@ -50,20 +60,49 @@ mobile.config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider.state(resultState);
 
     $urlRouterProvider.when('/', 'login');
+
+    $httpProvider.interceptors.push("httpInterceptor");
 });
 
+
+mobile.run(function($rootScope){
+    $rootScope.loading=true;
+})
+
+
+mobile.factory('httpInterceptor',["$rootScope",function($rootScope){
+    return {
+        request:function(config){
+            $rootScope.loading=true;
+            return config;
+        },
+        response:function(response){
+            $rootScope.loading=false;
+            return response;
+        },
+        requestError:function(error){
+            $rootScope.loading=false;
+            return error;
+        },
+        responseError:function(error){
+            $rootScope.loading=false;
+            return error;
+        }
+    }
+}])
 
 mobile.controller("godController", function ($scope) {
     $scope.playMusic = false;
     $scope.$on('playMusic', function () {
         $scope.playMusic = true;
     })
+
 })
 
 mobile.controller("loginController", function ($scope, $http, $state) {
     $scope.login = function () {
         PostbirdAlertBox.confirm({
-            'title': '确认',
+            'title': '需要你确认',
             'content': '确认授权微信登录',
             'okBtn': '是',
             'contentColor': 'red',
@@ -79,7 +118,6 @@ mobile.controller("loginController", function ($scope, $http, $state) {
 
 mobile.controller("startController", function ($scope, $http, $state) {
     $scope.init = function () {
-        // $scope.$emit('playMusic');
         audio.play();
     }
     $scope.startGame = function () {
@@ -103,7 +141,7 @@ mobile.controller("gameController", function ($scope, $http, $state) {
     function getAQuestion() {
         return $http({
             method: "GET",
-            url: "http://king.joeybox.top:8080/api/question/random"
+            url: DEVING?DEV_GET_A_RANDOM_QUESTION:PRO_GET_A_RANDOM_QUESTION
         }).then(function (result) {
             $scope.subject = result.data.data;
             updateProgress()
@@ -114,7 +152,7 @@ mobile.controller("gameController", function ($scope, $http, $state) {
 
     $scope.init = function () {
         $scope.badConnect = false;
-        $scope.total = 4;
+        $scope.total = 10;
         $scope.currentNum = 0;
         getAQuestion();
     }
@@ -125,13 +163,12 @@ mobile.controller("gameController", function ($scope, $http, $state) {
 
         $http({
             method: "POST",
-            url: "http://king.joeybox.top:8080/api/user/1/answer",
+            url: DEVING?DEV_CHECK_ANSWER_IS_CORRECT:PRO_CHECK_ANSWER_IS_CORRECT,
             data: {
                 questionId: $scope.subject.id,
                 answer: answer
             }
         }).then(function (result) {
-            console.log(result.data.data)
             var isCorrect = result.data.data;
             if (!isCorrect) {
                 $state.go("failed");
@@ -154,7 +191,7 @@ mobile.controller("gameController", function ($scope, $http, $state) {
 mobile.controller("successController", function ($scope, $http, $state) {
     $scope.giveMeMoney = function () {
         PostbirdAlertBox.confirm({
-            'title': '确认',
+            'title': '需要你确认',
             'content': '提现到微信，确定吗？',
             'okBtn': '是',
             'contentColor': 'red',

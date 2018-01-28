@@ -39,7 +39,10 @@
 
 .banner{
     text-align: center;
-    padding: 6rem 0;
+    padding: 4rem 0;
+}
+.banner img{
+    width: 100%;
 }
 .banner .normal{
     color:#555;
@@ -87,4 +90,15 @@
     width: 100%;
     text-align: center;
     z-index: 3;
+}
+
+button{
+    outline: none !important;
+}
+
+.loading{
+    position: fixed;
+    top:50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
 }

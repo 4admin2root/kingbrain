@@ -10,7 +10,12 @@
             <a type="button" class="btn btn-primary btn-lg btn-block" ui-sref="start">退出重连</a>
         </div>
     </div>
-    <div class="container" ng-if="!badConnect">
+    <div class="container loading" ng-if="loading&&!badConnect">
+            <div class="banner">
+                <img src="images/loading.gif" alt="" srcset="" class="img-thumbnail">
+            </div>
+        </div>
+    <div class="container" ng-if="!badConnect&&!loading">
         <div class="panel panel-default top-gap-10">
             <div class="panel-body">
                 <h2 class="title">{{subject.title}}</h2>
